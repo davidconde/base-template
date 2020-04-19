@@ -8,6 +8,8 @@ Description: >
 Globals:
   Function:
     Timeout: 3
+    Layers:
+      - !Ref BaseLayer
 
 Resources:
   HelloWorldFunction:
@@ -22,6 +24,22 @@ Resources:
           Properties:
             Path: /echo
             Method: get
+
+  ### ================
+  ### Layers
+  ### ================
+
+  BaseLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: base-layer
+      Description: Base dependecies
+      ContentUri: src/layers/base/
+      CompatibleRuntimes:
+        - nodejs8.10
+        - nodejs10.x
+      LicenseInfo: "MIT"
+      RetentionPolicy: Retain
 
 Outputs:
   HelloWorldApi:
